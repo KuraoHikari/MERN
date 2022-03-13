@@ -9,7 +9,7 @@ import {
 } from "../controllers/posts.js";
 
 router.get("/", getPosts);
-router.post("/create", createPosts);
+router.post("/", createPosts);
 router.post("/update", updatePosts);
 router.post("/delete", deletePosts);
 export default router;
