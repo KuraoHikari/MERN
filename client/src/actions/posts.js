@@ -1,26 +1,46 @@
 import * as api from '../api';
+import { CREATE, FETCH_ALL, UPDATE, DELETE } from '../constants/actionTypes';
 
 //Action Creator
 
 export const getPosts = () => async (dispatch) => {
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
   try {
     const { data } = await api.fetchPosts();
-    console.log(data, 'aaaaaaaaaaaa');
-
-    dispatch({ type: 'FETCH_ALL', payload: data });
+    dispatch({ type: FETCH_ALL, payload: data });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 export const ceratePosts = (post) => async (dispatch) => {
   try {
-    console.log(post, 'ini di actions');
     const { data } = await api.createPosts(post);
-
-    dispatch({ type: 'CREATE', payload: data });
+    dispatch({ type: CREATE, payload: data });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
+  }
+};
+export const updatePost = (id, post) => async (dispatch) => {
+  try {
+    const { data } = await api.updatePosts(id, post);
+    dispatch({ type: UPDATE, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const deletePost = (id) => async (dispatch) => {
+  try {
+    await api.deletePosts(id);
+    dispatch({ type: DELETE, payload: id });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const likePost = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.likePosts(id);
+    dispatch({ type: UPDATE, payload: data });
+  } catch (error) {
+    console.log(error);
   }
 };
 
