@@ -37,6 +37,7 @@ export const deletePost = (id) => async (dispatch) => {
 };
 export const likePost = (id) => async (dispatch) => {
   try {
+    console.log('masuk');
     const { data } = await api.likePosts(id);
     dispatch({ type: UPDATE, payload: data });
   } catch (error) {

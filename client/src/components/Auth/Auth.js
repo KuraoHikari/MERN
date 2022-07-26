@@ -6,6 +6,7 @@ import LockOutlineIcon from '@material-ui/icons/LockOutlined';
 import { GoogleLogin } from 'react-google-login';
 import Input from './Input';
 import Icon from './icon';
+import { signin, signup } from '../../actions/auth';
 
 import useStyles from './style';
 const initializeState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
@@ -19,7 +20,11 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (isSignup) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
   };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
