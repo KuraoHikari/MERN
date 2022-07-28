@@ -32,13 +32,14 @@ const Home = () => {
   };
 
   const searchPost = () => {
-    if (search.trim()) {
+    if (search.trim() || tags.length) {
       dispatch(
         getPostsBySearch({
           search,
           tags: tags.join(','),
         })
       );
+      history(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`, { replace: true });
     } else {
       history('../', { replace: true });
     }
@@ -50,9 +51,9 @@ const Home = () => {
     setTags(tags.filter((tag) => tag !== tagToDeleted));
   };
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [currentId, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getPosts());
+  // }, [currentId, dispatch]);
   return (
     <Grow in>
       <Container maxWidth="xl">
@@ -70,7 +71,7 @@ const Home = () => {
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId}></Form>
             <Paper elevation={6}>
-              <Pagination />
+              <Pagination page={page} />
             </Paper>
           </Grid>
         </Grid>

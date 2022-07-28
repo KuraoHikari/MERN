@@ -26,10 +26,17 @@ const Post = ({ post, setCurrentId }) => {
           &nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
         </>
       );
+    } else {
+      return (
+        <>
+          <ThumbUpAltOutlined fontSize="small" />
+          &nbsp;{post.likes.length} {'Like'}
+        </>
+      );
     }
   };
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} raised elevation={6}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
       <div className={classes.overlay}>
         <Typography variant="h6">{post.name}</Typography>
@@ -68,7 +75,7 @@ const Post = ({ post, setCurrentId }) => {
           {/* <ThumbUpAltIcon fontSize="small" />
           &nbsp; Like &nbsp;
           {post.likeCount} */}
-          <Likes></Likes>
+          <Likes />
         </Button>
         {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
           <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
