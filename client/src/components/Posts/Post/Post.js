@@ -42,23 +42,23 @@ const Post = ({ post, setCurrentId }) => {
   };
   return (
     <Card className={classes.card} raised elevation={6}>
-      <ButtonBase className={classes.cardActions} onClick={openPost}>
+      <ButtonBase className={classes.cardAction} onClick={openPost}>
         <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
         <div className={classes.overlay}>
           <Typography variant="h6">{post.name}</Typography>
           <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
         </div>
         {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-          <div className={classes.overlay2}>
-            {/* <pre>{post}</pre> */}
+          <div className={classes.overlay2} name="edit">
             <Button
-              style={{ color: 'white' }}
-              size="small"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setCurrentId(post._id);
               }}
+              style={{ color: 'white' }}
+              size="small"
             >
-              <MoreHorizIcon fontSize="medium"></MoreHorizIcon>
+              <MoreHorizIcon fontSize="default" />
             </Button>
           </div>
         )}

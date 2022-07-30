@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './style.js';
 
 import { ceratePosts, updatePost } from '../../actions/posts';
 const Form = ({ currentId, setCurrentId }) => {
-  const post = useSelector((state) => (currentId ? state.posts.find((p) => p._id === currentId) : null));
+  const post = useSelector((state) => (currentId ? state.posts.posts.find((p) => p._id === currentId) : null));
   const [postData, setPostData] = useState({
     title: '',
     message: '',
@@ -15,6 +16,7 @@ const Form = ({ currentId, setCurrentId }) => {
   });
 
   const user = JSON.parse(localStorage.getItem('profile'));
+  const history = useNavigate();
 
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -25,10 +27,10 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (currentId) {
-      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
+    if (currentId === 0) {
+      dispatch(ceratePosts({ ...postData, name: user?.result?.name }, history));
     } else {
-      dispatch(ceratePosts({ ...postData, name: user?.result?.name }));
+      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
     }
     clear();
     // console.log(postData);

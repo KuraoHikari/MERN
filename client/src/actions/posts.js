@@ -1,7 +1,17 @@
 import * as api from '../api';
-import { CREATE, FETCH_ALL, UPDATE, DELETE, FETCH_BY_SEARCH, START_LOADING, END_LOADING } from '../constants/actionTypes';
+import { CREATE, FETCH_ALL, UPDATE, DELETE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, FETCH_POST } from '../constants/actionTypes';
 
 //Action Creator
+export const getPost = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const { data } = await api.fetchPost(id);
+    dispatch({ type: FETCH_POST, payload: data });
+    dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getPosts = (page) => async (dispatch) => {
   try {
@@ -25,11 +35,12 @@ export const getPostsBySearch = (serachQuery) => async (dispatch) => {
     console.log(error);
   }
 };
-export const ceratePosts = (post) => async (dispatch) => {
+export const ceratePosts = (post, history) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data } = await api.createPosts(post);
     dispatch({ type: CREATE, payload: data });
+    history(`/posts/${data._id}`, { replace: true });
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
