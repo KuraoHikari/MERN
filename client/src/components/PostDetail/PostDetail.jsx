@@ -5,6 +5,7 @@ import moment from 'moment';
 import { useParams, useNavigate } from 'react-router-dom';
 import useStyles from './style.js';
 import { getPost, getPostsBySearch } from '../../actions/posts';
+import { CommentSection } from './CommentSection.jsx';
 
 export const PostDetail = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -51,7 +52,7 @@ export const PostDetail = () => {
           </Typography>
           <Divider style={{ margin: '20px 0' }} />
           <Typography variant="body1">
-            <strong>Comments - coming soon!</strong>
+            <CommentSection post={post} />
           </Typography>
           <Divider style={{ margin: '20px 0' }} />
         </div>
@@ -59,7 +60,7 @@ export const PostDetail = () => {
           <img className={classes.media} src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} />
         </div>
       </div>
-      {recomendedPosts.length && (
+      {recomendedPosts.length ? (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">
             You might also like :
@@ -85,6 +86,8 @@ export const PostDetail = () => {
             ))}
           </div>
         </div>
+      ) : (
+        ''
       )}
     </Paper>
   );
